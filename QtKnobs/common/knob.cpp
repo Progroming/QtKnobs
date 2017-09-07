@@ -69,7 +69,6 @@ void Knob::componentComplete()
     setWidth(m_size);
     setHeight(m_size);
     m_engine = qmlEngine(parentItem());
-    connect(parentItem(),&QQuickItem::destroyed,m_engine,&QQmlEngine::deleteLater);
     base();top();mid();
     if(m_style==Knob::Needle&&m_needleType==Knob::Point&&m_meter==true)
         showMeter();
@@ -206,7 +205,7 @@ void Knob::makeConnections(QQuickItem &item)
 {
     connect(&item,SIGNAL(valueChanged(int)),this,SLOT(setValue(int)));
     connect(&item,SIGNAL(percentChanged(int)),this,SLOT(setPercent(int)));
-    connect(parentItem(),&QQuickItem::destroyed,&item,&QQuickItem::deleteLater);
+    connect(this,&QQuickItem::destroyed,&item,&QQuickItem::deleteLater);
 }
 
 void Knob::setSize(qreal arg)
